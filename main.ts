@@ -24,17 +24,17 @@ namespace robotbit {
     const ALL_LED_OFF_L = 0xFC
     const ALL_LED_OFF_H = 0xFD
 
-    const STP_CHA_L = (2047 / 2)
-    const STP_CHA_H = (4095 / 2)
+    const STP_CHA_L = 1023
+    const STP_CHA_H = 2047
 
     const STP_CHB_L = 1
-    const STP_CHB_H = (2047 / 2)
+    const STP_CHB_H = 1023
 
-    const STP_CHC_L = (1023 / 2)
-    const STP_CHC_H = (3071 / 2)
+    const STP_CHC_L = 511
+    const STP_CHC_H = 1535
 
-    const STP_CHD_L = (3071 / 2)
-    const STP_CHD_H = (1023 / 2)
+    const STP_CHD_L = 1535
+    const STP_CHD_H = 511
 
     // HT16K33 commands
     const HT16K33_ADDRESS = 0x70
@@ -192,49 +192,6 @@ namespace robotbit {
         }
     }
 
-    function setStepperHalf(index: number, dir: boolean): void {
-        if (index == 1) {
-            if (dir) {
-                setPwm(0, STP_CHA_L, STP_CHA_H);
-                setPwm(0, STP_CHA_L, STP_CHA_H, 2, true);
-                setPwm(2, STP_CHB_L, STP_CHB_H);
-                setPwm(2, STP_CHA_L, STP_CHA_H, 1, true);
-                setPwm(1, STP_CHC_L, STP_CHC_H);
-                setPwm(1, STP_CHA_L, STP_CHA_H, 3, true);
-                setPwm(3, STP_CHD_L, STP_CHD_H);
-                setPwm(3, STP_CHA_L, STP_CHA_H, 0, true);
-            } else {
-                setPwm(3, STP_CHA_L, STP_CHA_H);
-                setPwm(3, STP_CHA_L, STP_CHA_H, 1, true);
-                setPwm(1, STP_CHB_L, STP_CHB_H);
-                setPwm(1, STP_CHA_L, STP_CHA_H, 2, true);
-                setPwm(2, STP_CHC_L, STP_CHC_H);
-                setPwm(2, STP_CHA_L, STP_CHA_H, 0, true);
-                setPwm(0, STP_CHD_L, STP_CHD_H);
-                setPwm(0, STP_CHA_L, STP_CHA_H, 3, true);
-            }
-        } else {
-            if (dir) {
-                setPwm(4, STP_CHA_L, STP_CHA_H);
-                setPwm(4, STP_CHA_L, STP_CHA_H, 6, true);
-                setPwm(6, STP_CHB_L, STP_CHB_H);
-                setPwm(6, STP_CHA_L, STP_CHA_H, 5, true);
-                setPwm(5, STP_CHC_L, STP_CHC_H);
-                setPwm(5, STP_CHA_L, STP_CHA_H, 7, true);
-                setPwm(7, STP_CHD_L, STP_CHD_H);
-                setPwm(7, STP_CHA_L, STP_CHA_H, 4, true);
-            } else {
-                setPwm(7, STP_CHA_L, STP_CHA_H);
-                setPwm(7, STP_CHA_L, STP_CHA_H, 5, true);
-                setPwm(5, STP_CHB_L, STP_CHB_H);
-                setPwm(5, STP_CHA_L, STP_CHA_H, 6, true);
-                setPwm(6, STP_CHC_L, STP_CHC_H);
-                setPwm(6, STP_CHA_L, STP_CHA_H, 4, true);
-                setPwm(4, STP_CHD_L, STP_CHD_H);
-                setPwm(4, STP_CHA_L, STP_CHA_H, 7, true);
-            }
-        }
-    }
 
     function stopMotor(index: number) {
         setPwm((index - 1) * 2, 0, 0);
@@ -312,18 +269,6 @@ namespace robotbit {
             initPCA9685()
         }
         setStepper(index, degree > 0);
-        degree = Math.abs(degree);
-        basic.pause(10240 * degree / 360);
-        MotorStopAll()
-    }
-
-    //% blockId=robotbit_stepper_degree_half block="Stepper 28BYJ-48|%index|degree %degree"
-    //% weight=90
-    export function StepperDegreeHalf(index: Steppers, degree: number): void {
-        if (!initialized) {
-            initPCA9685()
-        }
-        setStepperHalf(index, degree > 0);
         degree = Math.abs(degree);
         basic.pause(10240 * degree / 360);
         MotorStopAll()
