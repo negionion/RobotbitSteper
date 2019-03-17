@@ -24,17 +24,17 @@ namespace robotbit {
     const ALL_LED_OFF_L = 0xFC
     const ALL_LED_OFF_H = 0xFD
 
-    const STP_CHA_L = 1023
-    const STP_CHA_H = 2047
+    const STP_CHA_L = 0
+    const STP_CHA_H = 0
 
-    const STP_CHB_L = 1
-    const STP_CHB_H = 1023
+    const STP_CHB_L = 0
+    const STP_CHB_H = 0
 
-    const STP_CHC_L = 511
-    const STP_CHC_H = 1535
+    const STP_CHC_L = 0
+    const STP_CHC_H = 0
 
-    const STP_CHD_L = 1535
-    const STP_CHD_H = 511
+    const STP_CHD_L = 0
+    const STP_CHD_H = 0
 
     // HT16K33 commands
     const HT16K33_ADDRESS = 0x70
@@ -136,7 +136,7 @@ namespace robotbit {
         i2cwrite(PCA9685_ADDRESS, MODE1, oldmode | 0xa1);
     }
 
-    function setPwm(channel: number, on: number, off: number, channel2 = 0, repeat = false): void {
+    function setPwm(channel: number, on: number, off: number): void {
         if (channel < 0 || channel > 15)
             return;
         //serial.writeValue("ch", channel)
@@ -149,18 +149,7 @@ namespace robotbit {
         buf[2] = (on >> 8) & 0xff;
         buf[3] = off & 0xff;
         buf[4] = (off >> 8) & 0xff;
-        pins.i2cWriteBuffer(PCA9685_ADDRESS, buf, repeat);
-
-        if (repeat)
-        {
-            let buf2 = pins.createBuffer(5);
-            buf2[0] = LED0_ON_L + 4 * channel2;
-            buf2[1] = buf[1];
-            buf2[2] = buf[2];
-            buf2[3] = buf[3];
-            buf2[4] = buf[4];
-            pins.i2cWriteBuffer(PCA9685_ADDRESS, buf);
-        }
+        pins.i2cWriteBuffer(PCA9685_ADDRESS, buf);
     }
 
 
