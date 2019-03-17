@@ -201,7 +201,7 @@ namespace robotbit {
     //% blockId=debugLog block="Debug"
     //% weight=90
     export function debugLog(): number {
-        return 5;
+        return 5 / 2;
     }
 
     /**
