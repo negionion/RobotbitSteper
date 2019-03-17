@@ -91,6 +91,7 @@ namespace robotbit {
     let neoStrip: neopixel.Strip;
     let matBuf = pins.createBuffer(17);
     let distanceBuf = 0;
+    let speed = 1;
 
     function i2cwrite(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -113,7 +114,7 @@ namespace robotbit {
 
     function initPCA9685(): void {
         i2cwrite(PCA9685_ADDRESS, MODE1, 0x00)
-        setFreq(100); //50 to 100
+        setFreq(50 * speed); //50 to 100
         for (let idx = 0; idx < 16; idx++) {
             setPwm(idx, 0 ,0);
         }
@@ -201,7 +202,13 @@ namespace robotbit {
     //% blockId=debugLog block="Debug"
     //% weight=90
     export function debugLog(): number {
-        return 8 / 2;
+        return 10 / 2;
+    }
+	
+    //% blockId=stepperSpeed block="stepperSpeed |%s|"
+    //% weight=90
+    export function stepperSpeed(s: number): void {
+        speed = s;
     }
 
     /**
@@ -264,7 +271,7 @@ namespace robotbit {
         }
         setStepper(index, degree > 0);
         degree = Math.abs(degree);
-        basic.pause(10240 * degree / 360);
+        basic.pause((10240 * degree / 360) / speed);
         MotorStopAll()
     }
 
@@ -286,13 +293,13 @@ namespace robotbit {
         setStepper(2, degree2 > 0);
         degree1 = Math.abs(degree1);
         degree2 = Math.abs(degree2);
-        basic.pause(10240 * Math.min(degree1, degree2) / 360);
+        basic.pause((10240 * Math.min(degree1, degree2) / 360) / speed);
         if (degree1 > degree2) {
             stopMotor(3); stopMotor(4);
-            basic.pause(10240 * (degree1 - degree2) / 360);
+            basic.pause((10240 * (degree1 - degree2) / 360) / speed);
         } else {
             stopMotor(1); stopMotor(2);
-            basic.pause(10240 * (degree2 - degree1) / 360);
+            basic.pause((10240 * (degree2 - degree1) / 360) / speed);
         }
 
         MotorStopAll()
