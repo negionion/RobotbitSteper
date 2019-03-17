@@ -24,17 +24,17 @@ namespace robotbit {
     const ALL_LED_OFF_L = 0xFC
     const ALL_LED_OFF_H = 0xFD
 
-    const STP_CHA_L = (2047 / 1.5)
-    const STP_CHA_H = (4095 / 1.5)
+    const STP_CHA_L = (2047 / 2)
+    const STP_CHA_H = (4095 / 2)
 
     const STP_CHB_L = 1
-    const STP_CHB_H = (2047 / 1.5)
+    const STP_CHB_H = (2047 / 2)
 
-    const STP_CHC_L = (1023 / 1.5)
-    const STP_CHC_H = (3071 / 1.5)
+    const STP_CHC_L = (1023 / 2)
+    const STP_CHC_H = (3071 / 2)
 
-    const STP_CHD_L = (3071 / 1.5)
-    const STP_CHD_H = (1023 / 1.5)
+    const STP_CHD_L = (3071 / 2)
+    const STP_CHD_H = (1023 / 2)
 
     // HT16K33 commands
     const HT16K33_ADDRESS = 0x70
@@ -201,7 +201,7 @@ namespace robotbit {
     //% blockId=debugLog block="Debug"
     //% weight=90
     export function debugLog(): number {
-        return 5 / 2;
+        return 6 / 2;
     }
 
     /**
