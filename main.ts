@@ -201,14 +201,7 @@ namespace robotbit {
 
     /**
      * Init RGB pixels mounted on robotbit
-     */
-
-    //% blockId=debugLog block="Debug"
-    //% weight=90
-    export function debugLog(): number {
-        return 7;
-    }
-    
+     */   
     //% blockId="robotbit_rgb" block="RGB"
     //% weight=5
     export function rgb(): neopixel.Strip {
