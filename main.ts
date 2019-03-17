@@ -317,6 +317,8 @@ namespace robotbit {
         MotorStopAll()
     }
 
+    //% blockId=robotbit_stepper_degree_half block="Stepper 28BYJ-48|%index|degree %degree"
+    //% weight=90
     export function StepperDegreeHalf(index: Steppers, degree: number): void {
         if (!initialized) {
             initPCA9685()
