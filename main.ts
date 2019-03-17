@@ -268,18 +268,6 @@ namespace robotbit {
         MotorStopAll()
     }
 
-    //% blockId=robotbit_stepper_degree_half block="StepperHalf 28BYJ-48|%index|degree %degree"
-    //% weight=90
-    export function StepperDegreeHalf(index: Steppers, degree: number): void {
-        if (!initialized) {
-            initPCA9685()
-        }
-        setStepperHalf(index, degree > 0);
-        degree = Math.abs(degree);
-        basic.pause(10240 * degree / 360);
-        MotorStopAll()
-    }
-
 
     //% blockId=robotbit_stepper_turn block="Stepper 28BYJ-48|%index|turn %turn"
     //% weight=90
